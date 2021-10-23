@@ -303,7 +303,11 @@ const Dashboard = ({ provider, sdk, accounts }) => {
     setPurchaseOrderForm({ ...purchaseOrderForm, hash: e.currentTarget.value });
   };
   const handlePurchaseOrderAmount = (e) => {
-    setPurchaseOrderForm({ ...createOrderForm, ...purchaseOrderForm, amount: e.currentTarget.value });
+    setPurchaseOrderForm({
+      ...createOrderForm,
+      ...purchaseOrderForm,
+      amount: e.currentTarget.value,
+    });
   };
   const handleBidOrderForm = (e, key) => {
     setCreateBidForm({ ...createBidForm, [key]: e.currentTarget.value });
@@ -436,12 +440,20 @@ const Dashboard = ({ provider, sdk, accounts }) => {
             bidOrders.map((i) => {
               return (
                 <li key={i.id}>
-                  <p>
-                    <strong>creator</strong> id:{" "}
-                    {i.take.assetType.creators[0].account}
-                  </p>
+                  {i.take.assetType.hasOwnProperty("creators") && (
+                    <p>
+                      <strong>creator</strong> id:{" "}
+                      {i.take.assetType.creators[0].account}
+                    </p>
+                  )}
                   <p>
                     <strong>Bider:</strong> {i.maker}
+                  </p>
+                  <p>
+                    <strong>Hash:</strong> {i.hash}
+                  </p>
+                  <p>
+                    <strong>status:</strong> {i.status}
                   </p>
                   <p>
                     <strong>Bid Amount:</strong> {i.makeStock}
